@@ -4,6 +4,15 @@ const port = 3000
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
+const bodyParser= require('body-parser')
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
+app.get('/',function(req,res){
+    res.sendFile(__dirname + './public/index.html');
+})
+
 app.use(require("cors")());
 
 dotenv.config()
@@ -16,6 +25,7 @@ app.use(express.urlencoded({ extended: true}))
 //Bring in the routes
 app.use("/user", require("./routers/user"));
 app.use("/chatroom", require("./routers/chatroom"));
+app.use('/files', require("./routers/images"));
 
 // setup error handlers
 const errorHandlers = require('./handlers/errorHandlers')
